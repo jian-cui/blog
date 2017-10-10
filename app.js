@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const routerIndex = require('./routes/index');
 const https = require('https');
+const conf = require('./conf.js');
 const app = express();
 // database setting
 // const mysql = require('mysql');
@@ -50,8 +51,13 @@ app.use(function (err, req, res, next) {
 // app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(3000, function() {
-  console.log('Example app listening on port 3000');
+let port = conf.test.port;
+if (process.env.NODE_ENV == "production") {
+  port = conf.production.port;
+}
+
+app.listen(port, function() {
+  console.log('Example app listening on port ' + port);
 })
 
 module.exports = app;

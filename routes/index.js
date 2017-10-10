@@ -6,9 +6,10 @@ const router = express.Router();
 const connection = mysql.createConnection(dbConfig);
 
 // 首页
-router.get('/', function (req, res) {
+router.get('/', function (req, res, next) {
   // res.render('index', { title: 'My Blog'});
   connection.query('SELECT id, title, date_format(time, "%Y-%m-%d") as time FROM articles', function (err, results) {
+    if (err) next(err);
     res.render('index', {
       title: 'Posts',
       nav: [{

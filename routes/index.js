@@ -54,4 +54,10 @@ router.get('/article/:id', function (req, res) {
     })
   // res.render('index', { title: 'My Blog'})
 })
+
+// 测试页
+router.get('/test', function (req, res) {
+  res.send('<p>This is a test</p>');
+})
+
 module.exports = router;

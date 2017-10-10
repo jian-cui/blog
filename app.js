@@ -39,11 +39,11 @@ app.use('/', routerIndex);
 // })
 
 // 错误处理
-app.error(function (err, req, res, next) {
+app.use(function (err, req, res, next) {
   if (err.status === 404) {
     console.log(111);
   }
-  console.log(err);
+  res.send(err);
   // console.log(err.stack);
   // res.status(500).send('Something broke');
 })

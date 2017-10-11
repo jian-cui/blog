@@ -57,8 +57,10 @@ router.get('/article/:id', function (req, res) {
 })
 
 // 测试页
-router.get('/test', function (req, res) {
-  res.send('<p>This is a test</p>');
+router.get('/test/:html', function (req, res) {
+  // res.send('<p>This is a test</p>');
+  console.log('/html/' + req.params.html + '.html');
+  res.sendFile('/html/' + req.params.html + '.html');
 })
 
 module.exports = router;

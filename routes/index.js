@@ -1,6 +1,7 @@
 const express = require('express'),
       mysql = require('mysql'),
-      dbConfig = require('../db_config');
+      dbConfig = require('../db_config'),
+      path = require('path');
 
 const router = express.Router();
 const connection = mysql.createConnection(dbConfig);
@@ -56,11 +57,16 @@ router.get('/article/:id', function (req, res) {
   // res.render('index', { title: 'My Blog'})
 })
 
-// 测试页
+// // 测试页
 router.get('/test/:html', function (req, res) {
   // res.send('<p>This is a test</p>');
-  console.log('/html/' + req.params.html + '.html');
-  res.sendFile('/html/' + req.params.html + '.html');
+  // console.log('/html/' + req.params.html + '.html');
+  res.sendFile(path.join(__dirname, '../public/html/' + req.params.html + '.html'));
+})
+
+// react测试页
+router.get('/react', function (req, res) {
+  res.sendFile('/html/index.html')
 })
 
 module.exports = router;

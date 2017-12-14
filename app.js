@@ -1,10 +1,25 @@
 const path = require('path');
 const express = require('express');
-const routerIndex = require('./routes/index');
-const api = require('./routes/api');
+const routerIndex = require('./server/routes/index');
+const api = require('./server/routes/api');
 const https = require('https');
 const conf = require('./conf.js');
 const app = express();
+
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config');
+
+const compiler = webpack(config);
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+  noInfo: true,
+  stats: {
+      colors: true
+  }
+}));
+app.use(webpackHotMiddleware(compiler));
 // database setting
 // const mysql = require('mysql');
 // const connection = mysql.createConnection({
@@ -16,14 +31,9 @@ const app = express();
 // connection.connect();
 
 // 设置view
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, './server/views'));
 app.set('view engine', 'pug');
 
-// router
-// app.use('/', function (req, res, next) {
-//   console.log(req.url);
-//   next();
-// })
 app.use('/', routerIndex);
 // api
 app.use('/api', api);
@@ -46,14 +56,14 @@ app.use('/api', api);
 // 错误处理
 app.use(function (err, req, res, next) {
   if (err.status === 404) {
-    console.log('404错误');
+    console.log('404错误 页面未找到');
   }
   res.send(err);
 })
 
 // 静态资源路径重设
 // app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client')));
 
 let port = conf.test.port;
 if ("production" == process.env.NODE_ENV) {
@@ -62,6 +72,6 @@ if ("production" == process.env.NODE_ENV) {
 
 app.listen(port, function() {
   console.log('Example app listening on port ' + port);
-})
+});
 
-module.exports = app;
+// module.exports = app;

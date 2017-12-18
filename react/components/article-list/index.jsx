@@ -1,41 +1,75 @@
 import React from 'react';
-import './style.less';
+import ArticleUnit from '../article-unit/index.jsx';
+import Sidebar from '../sidebar/index.jsx';
+// import ajax from '../../common.js';
+import 'whatwg-fetch';
+import "./style.less";
 
 class ArticleList extends React.Component {
-  tagList(tags) {
-    return tags.map((tag, index) => 
-      <a href={tag.url} className="tag" key={index}>{tag.name}</a>
-    );
+  constructor (props) {
+    super(props);
+    this.state = {
+      articles: [],
+      userInfo: {}
+    }
   }
-  innerHTML(content) {
-    return { __html: content }
+  componentDidMount() {
+    // 获取数据
+    const _this = this;
+    const option = {
+      api: '/api/articleList',
+      method: 'post',
+      data: {
+        test: 1
+      },
+      credentials: 'include'
+    }
+    fetch(option.api, {
+      method: 'POST',
+    }).then(function(response) {
+      return response.json();
+    }).then(function (data) {
+      console.log(data)
+      _this.setState({
+        articles: data
+      })
+    }).catch(function (e) {
+    })
   }
-  render() {
+  render () {
     return (
-      <div className="region">
-        <div className="region-nodes">
-          <div className="node node-shadow">
-            <h1>
-              <a target="_blank" href={this.props.url}>{this.props.title}</a>
-            </h1>
-            <div className="node-header">
-              <div className="tags">
-                {this.tagList(this.props.tags)}
-              </div>
-              <div className="info">
-                <time>{this.props.time}</time>
-                <span>点击：{this.props.click}</span>
-              </div>
-            </div>
-            <div className="node-body" dangerouslySetInnerHTML={ this.innerHTML(this.props.content) }>
-            </div>
-            <div className="node-footer">
-              <a target="_blank" href={this.props.url}className="btn">阅读全文</a>
-            </div>
-          </div>
-        </div>
+      <div className="article-list">
+        { this.state.articles.map((article, index) => 
+          <ArticleUnit 
+            key={index}
+            id={article.id}
+            title={article.title} 
+            content={article.content}
+            view={article.view} 
+            time={article.time} 
+            tagID={article.tag_id}
+            tagTitle={article.tag_title}
+        />) }
       </div>
-    )
+      // <div id="main-wrapper">
+      //   <div className="content-wrapper">
+      //     <div className="content-wrapper-inner">
+      //     { this.state.articles.map((article, index) => <ArticleUnit 
+      //                                                     key={index}
+      //                                                     url={article.url}
+      //                                                     title={article.title} 
+      //                                                     content={article.content}
+      //                                                     click={article.click} 
+      //                                                     time={article.time} 
+      //                                                     tags={article.tags} />) }
+      //     </div>
+      //   </div>
+      //   <div id="sidebar" className="node-shadow">
+      //     <Sidebar info={ this.state.userInfo } />
+      //   </div>
+      //   <div className="clearfix"></div>
+      // </div>
+      )
   }
 }
 

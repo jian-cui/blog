@@ -1,0 +1,62 @@
+@import '../../less/conf.less';
+
+.region {
+  background-color: #FFF;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.region-nodes {
+  >.node {
+    padding: 20px;
+    h1 {
+      font-size: 24px;
+      color: #212529;
+      margin: 0 0 15px;
+      a {
+        color: inherit;
+        &:hover {
+          color: @word-hover-color;
+        }
+      }
+    }
+    .node-header {
+      font-size: 12px;
+      color: #cccccc;
+      margin-bottom: 10px;
+      time {
+        margin-right: 10px;
+      }
+      .tags {
+        float: right;
+      }
+      a.tag {
+        color: #ccc;
+        padding: 0 5px;
+        &:hover {
+          color: @word-hover-color;
+        }
+      }
+    }
+    .node-body {
+      font-size: 16px;
+      line-height: 30px;
+      color: #21252E;
+    }
+    .node-footer {
+      margin-top: 25px;
+      text-align: right;
+      a.btn {
+        display: inline-block;
+        font-size: 14px;
+        color: #FFF;
+        background-color: #3097D1;
+        padding: 5px 10px;
+        border-radius: 3px;
+        &:hover {
+          background-color: lighten(#3097D1, 10%);
+        }
+      }
+    }
+  }
+}

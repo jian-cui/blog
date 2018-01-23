@@ -29,7 +29,6 @@ class ArticleList extends React.Component {
     }).then(function(response) {
       return response.json();
     }).then(function (data) {
-      console.log(data)
       _this.setState({
         articles: data
       })

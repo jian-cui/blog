@@ -9,7 +9,7 @@ const connection = mysql.createConnection(dbConfig);
 // 首页
 router.get('/', function (req, res, next) {
   // res.render('index', { title: 'My Blog'});
-  connection.query('SELECT id, title, date_format(time, "%Y-%m-%d") as time FROM articles', function (err, results) {
+  connection.query('SELECT id, title, date_format(time, "%Y-%m-%d") as time FROM article', function (err, results) {
     if (err) next(err);
     res.render('index', {
       title: 'Posts',
@@ -57,15 +57,21 @@ router.get('/article/:id', function (req, res) {
 })
 
 // // 测试页
-router.get('/test/:html', function (req, res) {
-  // res.send('<p>This is a test</p>');
-  // console.log('/html/' + req.params.html + '.html');
-  res.sendFile(path.join(__dirname, '../client/html/' + req.params.html + '.html'));
-})
+// router.get('/test/:html', function (req, res) {
+//   // res.send('<p>This is a test</p>');
+//   // console.log('/html/' + req.params.html + '.html');
+//   res.sendFile(path.join(__dirname, '../client/html/' + req.params.html + '.html'));
+// })
 
 // react测试页
 router.get('/react', function (req, res) {
-  res.sendFile(path.join(__dirname, '../../client/html/index.html'));
+  // console.log(path.join(__dirname, '../../public/html/index.html'));
+  // res.sendFile(path.join(__dirname, '../../public/html/index.html'));
+  res.sendFile('html/index.html');
 })
+
+// router.get('/react/post/:id', function (req, res) {
+//   res.sendFile(path.join(__dirname, '../../client/html/index.html'))
+// }) 
 
 module.exports = router;

@@ -32,7 +32,7 @@ app.use(webpackHotMiddleware(compiler));
 
 // 设置view
 app.set('views', path.join(__dirname, './server/views'));
-app.set('view engine', 'pug');
+// app.set('view engine', 'pug');
 
 app.use('/', routerIndex);
 // api
@@ -63,7 +63,7 @@ app.use(function (err, req, res, next) {
 
 // 静态资源路径重设
 // app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 let port = conf.test.port;
 if ("production" == process.env.NODE_ENV) {

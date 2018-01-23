@@ -1,8 +1,7 @@
 import React from 'react';
-import Navbar from '../components/navbar/index.jsx';
-import ArticleList from '../components/article-list/index.jsx';
-import Sidebar from '../components/sidebar/index.jsx'
-// import "./style.less";
+import Navbar from '../../components/navbar/index.jsx';
+import ArticleList from '../../components/article-list/index.jsx';
+import Sidebar from '../../components/sidebar/index.jsx'
 
 class IndexPage extends React.Component {
   constructor (props) {
@@ -15,7 +14,6 @@ class IndexPage extends React.Component {
     return (
       <div id='page'>
         <Navbar />
-        {/* <ArticleList /> */}
         <div id="main-wrapper">
         <div className="content-wrapper">
           <div className="content-wrapper-inner">

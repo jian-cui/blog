@@ -25,7 +25,7 @@ router.post('/tagList', function (req, res, next) {
 
 router.post('/articleList', function (req, res, next) {
   connection.query(`
-    SELECT a.*, group_concat(t.id) as tag_id, group_concat(t.title) as tag_title
+    SELECT a.id, a.content, a.title, a.view, date_format(a.time, '%Y-%d-%m %H:%i') as time , group_concat(t.id) as tag_id, group_concat(t.title) as tag_title
     FROM
       article a,
       article_tag r,

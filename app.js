@@ -9,14 +9,14 @@ const app = express();
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./webpack.config');
+const config = require('./webpack.config.js');
 
 const compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   noInfo: true,
   stats: {
-      colors: true
+    colors: true
   }
 }));
 app.use(webpackHotMiddleware(compiler));
@@ -32,7 +32,7 @@ app.use(webpackHotMiddleware(compiler));
 
 // 设置view
 app.set('views', path.join(__dirname, './server/views'));
-// app.set('view engine', 'pug');
+app.set('view engine', 'pug');
 
 app.use('/', routerIndex);
 // api
@@ -63,7 +63,7 @@ app.use(function (err, req, res, next) {
 
 // 静态资源路径重设
 // app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 let port = conf.test.port;
 if ("production" == process.env.NODE_ENV) {
@@ -73,5 +73,3 @@ if ("production" == process.env.NODE_ENV) {
 app.listen(port, function() {
   console.log('Example app listening on port ' + port);
 });
-
-// module.exports = app;

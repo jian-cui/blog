@@ -24,6 +24,7 @@ router.post('/tagList', function (req, res, next) {
 })
 
 router.post('/articleList', function (req, res, next) {
+  const data = req.body;
   connection.query(`
     SELECT a.id, a.content, a.title, a.view, date_format(a.time, '%Y-%d-%m %H:%i') as time , group_concat(t.id) as tag_id, group_concat(t.title) as tag_title
     FROM
@@ -34,6 +35,14 @@ router.post('/articleList', function (req, res, next) {
       a.id = r.article_id AND t.id = r.tag_id group by a.id;`, function (err, results) {
     if (err) next(err);
     res.send(results);
+  })
+
+  router.post('/articleContent', function (req, res) {
+    const id = req.body.id;
+    res.send({
+      status: 200,
+      html: `<div>${id}</div>`
+    });
   })
   // res.send({
   //   articles: [{

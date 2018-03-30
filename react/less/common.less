@@ -29,6 +29,16 @@ ul, ol {
   box-shadow: 0 0 10px #e6e6e6;
 }
 
+body > embed {
+  // 隐藏safari中迅雷插件插入的embed元素
+  height: 0;
+  display: none;
+}
+
+#page {
+  position: relative;
+  padding-bottom: 40px;  // #footer 的高度
+}
 #main-wrapper {
   padding: 20px 10px 0;
   max-width: 1360px;
@@ -44,18 +54,48 @@ ul, ol {
   }
 }
 
-#sidebar {
-  float: right;
-  width: 340px;
+// #sidebar {
+//   float: right;
+//   width: 340px;
+//   padding: 20px;
+//   background-color: #FFF;
+//   box-sizing: border-box;
+//   margin-bottom: 20px;
+// }
+
+// #footer {
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   width: 100%;
+//   text-align: center;
+//   background-color: #333;
+//   color: #FFF;
+//   line-height: 40px;
+// }
+
+.content-container {
   padding: 20px;
-  background-color: #FFF;
-  box-sizing: border-box;
-  margin-bottom: 20px;
+  .react-layout-sider {
+    margin-left: 20px;
+  }
 }
 
-#footer {
-  text-align: center;
-  background-color: #333;
-  color: #FFF;
-  line-height: 40px;
+.react-layout-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100;
+}
+.react-layout.react-layout-has-sider {
+  margin-top: 64px;
+}
+
+.react-menu-item {
+  padding: 0;
+  > a {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }

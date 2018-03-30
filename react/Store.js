@@ -1,17 +1,18 @@
 import thunkMiddleware from 'redux-thunk'
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
-import {reducer as topMenuReducer} from './components/TopMenu';
-import {reducer as articleListReducer} from './components/ArticleList';
-import {reducer as articleContentReducer} from './components/ArticleContent';
+// import {reducer as topMenuReducer} from './components/TopMenu';
+// import {reducer as articleListReducer} from './components/ArticleList';
+// import {reducer as articleContentReducer} from './components/ArticleContent';
+import reducer from './Reducer.js';
 
 import reduxImmutableState from 'redux-immutable-state-invariant';
 
 const win = window;
-const reducer = combineReducers({
-  topMenu: topMenuReducer,
-  articleList: articleListReducer,
-  articleContent: articleContentReducer
-})
+// const reducer = combineReducers({
+//   topMenu: topMenuReducer,
+//   articleList: articleListReducer,
+//   articleContent: articleContentReducer
+// })
 
 const middlewares = [thunkMiddleware];
 if (process.env.NODE_ENV !== 'production') {
@@ -57,5 +58,21 @@ const initialState = {
     html: ''
   }
 };
+// export default createStore(reducer, initialState, storeEnhancers);
 
-export default createStore(reducer, initialState, storeEnhancers);
+
+
+// https://github.com/reactjs/react-redux/releases/tag/v2.0.0
+export default function configureStore() {
+  const store = createStore(reducer, initialState, storeEnhancers);
+
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./Reducer.js', () => {
+      const nextRootReducer = require('./Reducer.js').default;
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  return store;
+}

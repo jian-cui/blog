@@ -4,39 +4,36 @@ import { Provider } from 'react-redux';
 import Routes from './Routes.js';
 import store from './Store.js';
 // import {AppContainer} from 'react-hot-loader'
-import { hot } from 'react-hot-loader';
+// import { hot } from 'react-hot-loader';
 import "./less/common.less";
 
 // const render = (Component) => {
 //   ReactDOM.render(
 //     <AppContainer>
-//       <Component />
+//       <Component store={store} />
 //     </AppContainer>,
 //     document.getElementById('app')
 //   )
 // }
-// // render(hot(module)(Routes));
-// render(Routes);
+// // // render(hot(module)(Routes));
+// render(ProviderRoutes);
 
-// // 热加载react-hot-loader
+// // // 热加载react-hot-loader
 // if (module.hot) {  
 //   module.hot.accept('./Routes.js', () => {
-//     render(require('./Routes.js'));
+//     render(require('./Routes.js').default);
 //   })  
 // }
-class ProviderRoutes extends React.Component {
-  render() {
-    return (
-      <Provider store={store} >
-        <Routes />
-      </Provider>
-    )
-  }
-}
-
-// const HotRoutes = hot(module)(ProviderRoutes);
-
 ReactDOM.render(
-  <ProviderRoutes />,
+  <Provider store={store()}>
+    <Routes />
+  </Provider>,
   document.getElementById('app')
 );
+
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <Routes />
+//   </Provider>,
+//   document.getElementById('app')
+// );

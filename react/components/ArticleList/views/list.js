@@ -22,28 +22,15 @@ class ArticleList extends React.Component {
   }
   constructor (props, context) {
     super(props, context);
-    // this.state = {
-    //   list: [],
-    //   // userInfo: {},
-    // }
-    // this.option = {
-    //   api: '/api/articleList',
-    //   method: 'post',
-    //   data: {
-    //     test: 1
-    //   },
-    //   credentials: 'include'
-    // }
+  
     this.scrollPrevDist = 30; // 滚动加载数据的预设距离
     this.pullArticles = this.pullArticles.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    // this.pullLock = false; // 获取新数据锁
   }
   pullArticles () {
     this.props.fetchData();
   }
   handleScroll(e) {
-    // console.log(e)
     let scrollY = document.documentElement.scrollTop;
     let windowHeight = document.documentElement.clientHeight;
     let docHeight = document.body.clientHeight;

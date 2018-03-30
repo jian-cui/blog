@@ -1,17 +1,12 @@
 import React from 'react';
 import App from './App.js';
-// import ArticleContent from './components/ArticleContent/';
 import { view as ArticleList } from './components/ArticleList/';
 import { view as ArticleContent} from './components/ArticleContent/';
-
-// import Home from './pages/Home.js';
-// import Content from './pages/Content.js';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-// import Loadable from 'react-loadable';
-// import { ConnectedRouter } from 'react-router-redux'
-import createHistory from "history/createBrowserHistory";
-
-// const customHistory = createHistory();
+// import createHistory from "history/createBrowserHistory";
+import { Provider } from 'react-redux';
+import { hot } from 'react-hot-loader';
+// import store from './Store.js';
 
 class Routes extends React.Component {
   render() {
@@ -27,4 +22,15 @@ class Routes extends React.Component {
     );
   }
 }
-export default Routes;
+
+// class ProviderRoutes extends React.Component {
+//   render() {
+//     return (
+//       <Provider store={store()}>
+//         <Routes />
+//       </Provider>
+//     )
+//   }
+// }
+export default hot(module)(Routes);
+// export default Routes;

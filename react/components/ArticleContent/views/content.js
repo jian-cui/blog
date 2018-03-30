@@ -54,7 +54,6 @@ class ArticleContent extends React.Component {
     this.props.fetchData(this.props.match.params.id);
   }
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
     const id = nextProps.match.params.id
     if (id != this.props.match.params.id) {
       this.props.fetchData(id);

@@ -10,12 +10,13 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 let webpackConfig = {
   entry: ['react-hot-loader/patch', 'webpack-hot-middleware/client', path.resolve(__dirname, '../react/index.js')],
+  // entry: ['webpack-hot-middleware/client', path.resolve(__dirname, '../react/index.js')],
   output: {
     // filename: 'script/bundle.js',
     filename: 'script/[name].js',
     chunkFilename: 'script/[name].chunk.js',
     path: path.resolve(__dirname, './public'),
-    // publicPath: "http://localhost:3000"      // html中script标签的路径头
+    publicPath: "/"      // html中script标签的路径头
   },
   module: {
     loaders: [{
@@ -23,19 +24,18 @@ let webpackConfig = {
       exclude: /node_modules/,
       loader: 'babel-loader',
       options: {
-        // plugins: ["react-hot-loader/babel", "syntax-dynamic-import"],
-        cacheDirectory: true,
         plugins: ["react-hot-loader/babel"],
+        cacheDirectory: true,
         presets: ['es2015', 'stage-0', 'react']
       }
     }, {
       test: /\.less$/,
       exclude: /node_modules/,
-      // use: ["style-loader", "css-loader", "less-loader"]
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: ['css-loader', 'less-loader']
-      })
+      use: ["style-loader", "css-loader", "less-loader"]
+      // use: ExtractTextPlugin.extract({
+      //   fallback: 'style-loader',
+      //   use: ['css-loader', 'less-loader']
+      // })
 
     }, {
       // image
@@ -67,9 +67,9 @@ let webpackConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
     /** HMR设置 end */
 
-    new ManifestPlugin({
-      fileName: 'asset-manifest.json'
-    }),
+    // new ManifestPlugin({
+    //   fileName: 'asset-manifest.json'
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "common",
       filename: 'script/common.js'
@@ -79,9 +79,9 @@ let webpackConfig = {
       template: './react/template.html',
       inject: true,
     }),
-    new ExtractTextPlugin({
-      filename: 'style/style.css'
-    })
+    // new ExtractTextPlugin({
+    //   filename: 'style/style.css'
+    // })
   ]
 }
 

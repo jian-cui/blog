@@ -69,9 +69,11 @@ class ArticleContent extends React.Component {
   }
 }
 
+export const stateKey = 'articleContent';
+
 const mapStateToProps = (state, ownProps) => {
   return {
-    html: state.articleContent.html
+    html: state[stateKey].html
   }
 }
 

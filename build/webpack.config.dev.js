@@ -9,12 +9,12 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 let webpackConfig = {
-  entry: ['react-hot-loader/patch', 'webpack-hot-middleware/client', path.resolve(__dirname, '../react/index.js')],
+  entry: ['webpack-hot-middleware/client', 'react-hot-loader/patch', path.resolve(__dirname, '../react/index.js')],
   // entry: ['webpack-hot-middleware/client', path.resolve(__dirname, '../react/index.js')],
   output: {
     // filename: 'script/bundle.js',
     filename: 'script/[name].js',
-    chunkFilename: 'script/[name].chunk.js',
+    chunkFilename: 'script/[name].[chunkhash].js',
     path: path.resolve(__dirname, './public'),
     publicPath: "/"      // html中script标签的路径头
   },
@@ -24,7 +24,14 @@ let webpackConfig = {
       exclude: /node_modules/,
       loader: 'babel-loader',
       options: {
-        plugins: ["react-hot-loader/babel"],
+        plugins: [
+          "react-hot-loader/babel", 
+          ["transform-runtime", {
+            "polyfill": false,
+            "regenerator": true
+          }],
+          "syntax-dynamic-import"
+        ],
         cacheDirectory: true,
         presets: ['es2015', 'stage-0', 'react']
       }
@@ -71,8 +78,9 @@ let webpackConfig = {
     //   fileName: 'asset-manifest.json'
     // }),
     new webpack.optimize.CommonsChunkPlugin({
+      // names: ['vendor', 'manifest'],
       name: "common",
-      filename: 'script/common.js'
+      // filename: 'script/common.js'
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',

@@ -67,12 +67,14 @@ class ArticleList extends React.Component {
   }
 }
 
+export const stateKey = 'articleList';
+
 const mapStateToProps = (state, ownProps) => {
   return {
-    list: state.articleList.list,
-    lock: state.articleList.lock,
-    status: state.articleList.status,
-    page: state.articleList.page
+    list: state[stateKey].list,
+    lock: state[stateKey].lock,
+    status: state[stateKey].status,
+    page: state[stateKey].page
   }
 }
 
@@ -82,5 +84,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-// export default ArticleList;
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleList);

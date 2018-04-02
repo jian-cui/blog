@@ -55,6 +55,8 @@ class TopMenu extends React.Component {
   }
 }
 
+// export const stateKey = 'topMenu'
+
 const mapStateToProps = (state, ownProps) => {
   return {
     list: state.topMenu

@@ -15,7 +15,7 @@ class App extends React.Component {
           <Content>
             { this.props.children }
           </Content>
-          <Sider>
+          <Sider collapsible={false}>
             This is a Sider
           </Sider>
         </Layout>

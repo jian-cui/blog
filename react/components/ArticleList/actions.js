@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch';
 import { FETCH_STARTED, FETCH_SUCCESS, FETCH_FAIL } from './actionTypes.js';
 
 export const fetchArticlesStarted = () => ({
@@ -16,19 +17,21 @@ export const fetchArticlesFail = (error) => ({
 
 export const fetchArticles = () => {
   return (dispatch, getState) => {
-    // const api = getState().api.fetchArticles;
-    const api = '/api/articleList';
-    const lock = getState().articleList.lock;
-    const page = getState().articleList.page;
+    // const __SERVER__ = typeof window == 'object' ? false : true;
+    // const api = __SERVER__ ? 'http://localhost:3000/api/articleList' : '/api/articleList';
+    const state = getState();
+    const lock = state.articleList.lock;
+    const page = state.articleList.page;
+    const api = state.common.api.list;
     if (!lock) {
       dispatch(fetchArticlesStarted());
-      fetch(api, {
+      // 记得返回fetch
+      return fetch(api, {
         method: 'POST',
         // credentials: 'include',
         headers:{
           "Content-Type": "application/json"
         },
-        // body: `page=${page}`
         body: JSON.stringify({
           page: page
         })
@@ -36,10 +39,11 @@ export const fetchArticles = () => {
         if (res.status !== 200) {
           throw new Error('Fail to get response width status ' + res.status);
         }
-        res.json().then((responseJson) => {
-          dispatch(fetchArticlesSuccess(responseJson));
-        }).catch(error => {
-          throw new Error('Invalid json repsonse: ' + error);
+        // 此处要将Promise返回
+        return res.json().then(data => {
+          dispatch(fetchArticlesSuccess(data));
+        }).catch(err => {
+          throw new Error('JSON转换不对');
         })
       }).catch(error => {
         dispatch(fetchArticlesFail(error));

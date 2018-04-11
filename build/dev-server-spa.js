@@ -1,3 +1,8 @@
+// 处理import export
+// const fs = require('fs'); 
+// const babelConfig = JSON.parse(fs.readFileSync('./.babelrc'));  
+// require('babel-register')(babelConfig);
+
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
@@ -9,6 +14,10 @@ const bodyParser = require('body-parser');
 const app = express();
 const config = require('./webpack.config.dev.js');
 const compiler = webpack(config);
+
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const reactApp = require('../react/').default;
 
 const api = require('../server/routes/api');
 
@@ -22,6 +31,10 @@ app.use(webpackDevMiddleware(compiler, {
     children: false
   }
 }));
+
+const appHTML = ReactDOMServer.renderToString(React.createElement(component, null, null));
+// const appHTML = ReactDOMServer.renderToStaticMarkup(React.createElement())
+console.log(appHTML);
 
 app.use(require("webpack-hot-middleware")(compiler));
 

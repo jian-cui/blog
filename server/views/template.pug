@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    link(rel="shortcut icon" href="/image/favicon.ico")
+    title Jian Cui
+  body
+    #app !{html}
+    script.
+      var DEHYDRATED_STATE = !{preloadedState}                             
+    script(src=PUBLIC_URL + assetManifest['common'][0])
+    script(src=PUBLIC_URL + assetManifest['main'][0])

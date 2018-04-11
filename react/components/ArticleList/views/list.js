@@ -16,9 +16,16 @@ class ArticleList extends React.Component {
   static propTypes = {
     list: PropTypes.array.isRequired,
     status: PropTypes.oneOf([Status.LOADING, Status.SUCCESS, Status.FAIL]),
-    fetchData: PropTypes.func.isRequired,
+    // fetchData: PropTypes.func.isRequired,
     page: PropTypes.number.isRequired,
     lock: PropTypes.bool.isRequired
+  }
+  static fetch(state, dispatch) {
+    const fetchTasks = [];
+    fetchTasks.push(
+      dispatch(fetchArticles())
+    );
+    return fetchTasks;
   }
   constructor (props, context) {
     super(props, context);
@@ -28,7 +35,7 @@ class ArticleList extends React.Component {
     this.handleScroll = this.handleScroll.bind(this);
   }
   pullArticles () {
-    this.props.fetchData();
+    this.constructor.fetch(this.props.state, this.props.dispatch);
   }
   handleScroll(e) {
     let scrollY = document.documentElement.scrollTop;
@@ -40,7 +47,7 @@ class ArticleList extends React.Component {
   }
   componentDidMount() {
     // 获取数据
-    this.pullArticles();
+    // this.pullArticles();
     // 绑定滚动事件
     window.addEventListener('scroll', this.handleScroll);
   }
@@ -74,13 +81,15 @@ const mapStateToProps = (state, ownProps) => {
     list: state[stateKey].list,
     lock: state[stateKey].lock,
     status: state[stateKey].status,
-    page: state[stateKey].page
+    page: state[stateKey].page,
+    state: state
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchData: () => dispatch(fetchArticles())
+    // fetchData: () => dispatch(fetchArticles()),
+    dispatch: (action) => dispatch(action)
   }
 }
 

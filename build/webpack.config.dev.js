@@ -74,19 +74,19 @@ let webpackConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
     /** HMR设置 end */
 
-    // new ManifestPlugin({
-    //   fileName: 'asset-manifest.json'
-    // }),
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json'
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       // names: ['vendor', 'manifest'],
       name: "common",
       // filename: 'script/common.js'
     }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './react/template.html',
-      inject: true,
-    }),
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: './react/template.html',
+    //   inject: true,
+    // }),
     // new ExtractTextPlugin({
     //   filename: 'style/style.css'
     // })

@@ -16,10 +16,11 @@ export const fetchContentFail = (error) => ({
 
 export const fetchContent = (id) => {
   return (dispatch, getState) => {
-    const api = '/api/articleContent';
-
+    const state = getState();
+    const api = state.common.api.content
     dispatch(fetchContentStarted());
-    fetch(api, {
+    // 记得返回fetch
+    return fetch(api, {
       method: 'POST',
       headers:{
         "Content-Type": "application/json"
@@ -31,7 +32,8 @@ export const fetchContent = (id) => {
       if (res.status !== 200) {
         throw new Error('Fail to get response width status ' + res.status);
       }
-      res.json().then((responseJson) => {
+      // 此处要将Promise返回
+      return res.json().then((responseJson) => {
         dispatch(fetchContentSuccess(responseJson.html));
       }).catch(error => {
         throw new Error('Invalid json repsonse: ' + error);

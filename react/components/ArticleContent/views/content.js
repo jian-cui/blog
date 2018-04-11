@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {fetchContent} from '../actions.js';
 import * as Status from '../status.js';
 import "../style/style.less";
+import {stateKey as commonStateKey} from '../../../redux.common.js';
 
 class ArticleContent extends React.Component {
   static defaultProps = {
@@ -11,8 +12,16 @@ class ArticleContent extends React.Component {
   }
   static propTypes = {
     html: PropTypes.string,
-    fetchData: PropTypes.func.isRequired,
+    // fetchData: PropTypes.func.isRequired,
     status: PropTypes.oneOf([Status.LOADING, Status.SUCCESS, Status.FAIL])
+  }
+  static fetch(state, dispatch) {
+    const fetchTasks = [];
+    const id = state[commonStateKey].id;
+    fetchTasks.push(
+      dispatch(fetchContent(id))
+    );
+    return fetchTasks;
   }
   constructor (props, context) {
     super(props, context);
@@ -51,13 +60,14 @@ class ArticleContent extends React.Component {
     )
   }
   componentDidMount() {
-    this.props.fetchData(this.props.match.params.id);
+    // this.props.fetchData(this.props.match.params.id);
+    // this.constructor.fetch(this.props.state, this.props.dispatch);
   }
   componentWillReceiveProps(nextProps) {
-    const id = nextProps.match.params.id
-    if (id != this.props.match.params.id) {
-      this.props.fetchData(id);
+    if (nextProps.state[commonStateKey].id !== this.props.state[commonStateKey].id) {
+      this.constructor.fetch(nextProps.state, this.props.dispatch);
     }
+
   }
   render () {
     let articleContent = this.props.html.length > 0 ? this.getArticle() : this.getEmptyArticle();
@@ -73,13 +83,15 @@ export const stateKey = 'articleContent';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    html: state[stateKey].html
+    html: state[stateKey].html,
+    state: state
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    fetchData: (id) => dispatch(fetchContent(id))
+    // fetchData: (id) => dispatch(fetchContent(id)),
+    dispatch: (action) => dispatch(action)
   }
 }
 

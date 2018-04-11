@@ -7,25 +7,33 @@ import reducer, { originalReducer } from './Reducer.js';
 import reduxImmutableState from 'redux-immutable-state-invariant';
 import resetEnhancer from './enhancers/reset.js';
 import { state as topMenuState } from './components/TopMenu';
+import { state as commonState, stateKey as commonStateKey } from './redux.common.js';
+// import { state as articleListState, stateKey as articleListKey } from './components/ArticleList';
+// import { state as articleContentState, stateKey as articleContentKey } from './components/ArticleContent';
 
-const win = window;
 
 const middlewares = [thunkMiddleware];
 if (process.env.NODE_ENV !== 'production') {
   middlewares.push(reduxImmutableState());
 }
 
+const win = global.window;;
 const storeEnhancers = compose(
   resetEnhancer,
   applyMiddleware(...middlewares),
   (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
 );
 
+
+
 const initialState = {
   // api: {
   //   fetchArticles: '/api/articleList'
   // },
-  topMenu: topMenuState
+  topMenu: topMenuState,
+  [commonStateKey]: commonState
+  // [articleListKey]: articleListState,
+  // [articleContentKey]: articleContentState
 };
 // export default createStore(reducer, initialState, storeEnhancers);
 

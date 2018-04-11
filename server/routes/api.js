@@ -24,7 +24,6 @@ router.post('/tagList', function (req, res, next) {
 })
 
 router.post('/articleList', function (req, res, next) {
-  console.log('获取文章列表')
   const data = req.body;
   connection.query(`
     SELECT a.id, a.content, a.title, a.view, date_format(a.time, '%Y-%d-%m %H:%i') as time , group_concat(t.id) as tag_id, group_concat(t.title) as tag_title
@@ -40,7 +39,6 @@ router.post('/articleList', function (req, res, next) {
 })
 
 router.post('/articleContent', function (req, res) {
-  console.log('获取文章内容')
   const id = req.body.id;
   res.send({
     status: 200,

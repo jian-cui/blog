@@ -58,7 +58,8 @@ function asyncComponentHOC(importComponent) {
     }
     async componentWillMount() {
       const { view: component, stateKey: stateKey, reducer, state } = await importComponent();
-      const dehydratedState = (win && win.DEHYDRATED_STATE);
+      let dehydratedState = (win && win.DEHYDRATED_STATE);
+      dehydratedState = dehydratedState ? dehydratedState : {};
       const oldState = store.getState();
       const mergedState = {...dehydratedState, ...oldState};
 

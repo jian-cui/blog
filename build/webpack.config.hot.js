@@ -10,6 +10,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 
 let webpackConfig = {
   entry: ['webpack-hot-middleware/client', 'react-hot-loader/patch', path.resolve(__dirname, '../react/index.js')],
+  // entry: ['react-hot-loader/patch', path.resolve(__dirname, '../react/index.js')],
   // entry: ['webpack-hot-middleware/client', path.resolve(__dirname, '../react/index.js')],
   output: {
     // filename: 'script/bundle.js',
@@ -25,14 +26,14 @@ let webpackConfig = {
       loader: 'babel-loader',
       options: {
         plugins: [
-          "react-hot-loader/babel", 
           ["transform-runtime", {
             "polyfill": false,
             "regenerator": true
           }],
-          "syntax-dynamic-import"
+          "syntax-dynamic-import",
+          "react-hot-loader/babel"
         ],
-        cacheDirectory: true,
+        // cacheDirectory: true,
         presets: ['es2015', 'stage-0', 'react']
       }
     }, {
@@ -82,21 +83,14 @@ let webpackConfig = {
       name: "common",
       // filename: 'script/common.js'
     }),
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: './react/template.html',
-    //   inject: true,
-    // }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './react/template.html',
+      inject: true,
+    }),
     // new ExtractTextPlugin({
     //   filename: 'style/style.css'
     // })
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': "'development'",
-        'HOT': "true",
-        'SSR': "true"
-      }
-    })
   ]
 }
 

@@ -23,4 +23,10 @@ class Routes extends React.Component {
   }
 }
 
-export default hot(module)(Routes);
+let comp = Routes;
+if (process.env.HOT === true) {
+  comp = hot(module)(Routes);
+}
+
+export default comp;
+// export default hot(module)(Routes);

@@ -5,7 +5,9 @@ import { Provider } from 'react-redux';
 import store from './Store.js';
 import "./less/common.less";
 
-ReactDOM.hydrate(
+const render = process.env.SSR === true ? ReactDOM.hydrate : ReactDOM.render;
+
+render(
   <Provider store={store}>
     <Routes />
   </Provider>,

@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "node app.js",
-    "build": "NODE_ENV=production node app.js",
+    "build": "NODE_ENV=production node run prod",
     "forever": "NODE_ENV=production forever start app.js",
     "webpack": "webpack --config build/webpack.config.js",
-    "prod": "webpack --config build/webpack.prod.config.js",
+    "prod": "webpack --config build/webpack.config.prod.js",
     "start": "node server/app.dev.js",
     "hot": "node server/app.hot.js",
     "dev": "NODE_ENV=devlopment node server/app.dev.js"

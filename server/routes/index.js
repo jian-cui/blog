@@ -9,7 +9,7 @@ const connection = mysql.createConnection(dbConfig);
 const ReactDOMServer = require('react-dom/server');
 
 const reactComponent = require(`process.cwd()/public/script/app.js`);
-console.log(reactComponent)
+
 /**
  * 渲染代码
  * @param {React.ComponentType} component 

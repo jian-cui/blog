@@ -26,7 +26,7 @@ router.post('/tagList', function (req, res, next) {
 
 // 首页列表
 router.post('/articleList', function (req, res, next) {
-  const data = req.body;
+  // const data = req.body;
   // connection.query(`
   //   SELECT a.id, a.title, a.title_en, a.view, date_format(a.time, '%Y-%d-%m %H:%i') as time , group_concat(t.id) as tag_id, group_concat(t.title) as tag_title
   //   FROM
@@ -38,7 +38,7 @@ router.post('/articleList', function (req, res, next) {
   //     if (err) next(err);
   //     res.send(results);
   //   })
-  console.log(111)
+  console.log('getting article list')
   connection.query(`
     SELECT id, title, title_en, view, date_format(time, '%Y-%m-%d %H:%i') as time
     FROM

@@ -87,14 +87,6 @@ app.get('*', function(req, res, next) {
 const mysql = require('mysql'),
       dbConfig = require('./db_config');
 
-const connection = mysql.createConnection(dbConfig);
-connection.query(`
-  select * from article
-`, (err, results) => {
-  console.log(err)
-  console.log(results)
-})
-
 // Serve the files on port 3000.
 app.listen(80, function () {
   console.log('Start!\n');

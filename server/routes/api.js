@@ -38,6 +38,7 @@ router.post('/articleList', function (req, res, next) {
   //     if (err) next(err);
   //     res.send(results);
   //   })
+  console.log(111)
   connection.query(`
     SELECT id, title, title_en, view, date_format(time, '%Y-%m-%d %H:%i') as time
     FROM
@@ -45,7 +46,6 @@ router.post('/articleList', function (req, res, next) {
     WHERE
       visible=1
     order by time DESC`, function (err, results) {
-      console.log(1111)
       if (err) next(err);
       res.send(results);
     })

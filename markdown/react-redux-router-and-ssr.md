@@ -327,8 +327,25 @@ const AsyncArticleList = asyncComponentHOC(() => import(/* webpackChunkName: "ho
    }
    ```
 
-   ​
 
+5. api接口处修改
+
+   在react中判断接口是在服务器还是页面中请求，如果是在服务器中，则需要添加**域名前缀**
+
+   ```javascript
+   // redux-common.js
+   // 判断是否服务器渲染
+   const __SERVER__ = typeof window == 'object' ? false : true;
+   const SERVER = __SERVER__ ? 'http://www.jiancui.net' : '';
+   const state = {
+     api: {
+       list: `${SERVER}/api/articleList`,
+       content: `${SERVER}/api/articleContent`
+     }
+   }
+   ```
+
+   ​
 
 
 

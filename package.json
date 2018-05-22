@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prod": "NODE_ENV=pro node server/app.prod.js",
+    "prod": "NODE_ENV=production node server/app.prod.js",
     "build": "NODE_ENV=production webpack --config build/webpack.config.prod.js",
     "forever": "NODE_ENV=production forever start server/app.prod.js",
     "dev": "NODE_ENV=devlopment node server/app.dev.js",

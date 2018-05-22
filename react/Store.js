@@ -24,8 +24,7 @@ const storeEnhancers = compose(
   (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
 );
 
-
-
+// 初始State
 const initialState = {
   // api: {
   //   fetchArticles: '/api/articleList'
@@ -53,6 +52,7 @@ const initialState = {
 // }
 const store = createStore(reducer, initialState, storeEnhancers);
 
+// https://github.com/reactjs/react-redux/releases/tag/v2.0.0
 if (module.hot) {
   // Enable Webpack hot module replacement for reducers
   module.hot.accept('./Reducer.js', () => {

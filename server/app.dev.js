@@ -68,7 +68,10 @@ function getAssetManifest() {
 app.use(webpackDevMiddleware);
 app.use(require("webpack-hot-middleware")(compiler));
 
+// 静态资源
 app.use(express.static(path.join(__dirname, '../public')));
+// markdown转换后的html、图片等
+app.use(express.static(path.join(__dirname, '../html')));
 
 app.set('view engine', 'pug');
 app.set('views', path.resolve(__dirname, 'views'));

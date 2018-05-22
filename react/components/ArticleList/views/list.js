@@ -49,26 +49,27 @@ class ArticleList extends React.Component {
     // 获取数据
     // this.pullArticles();
     // 绑定滚动事件
-    window.addEventListener('scroll', this.handleScroll);
+    // window.addEventListener('scroll', this.handleScroll);
   }
   componentWillUnmount () {
-    window.removeEventListener('scroll', this.handleScroll);
+    // window.removeEventListener('scroll', this.handleScroll);
   }
   render () {
     const {list} = this.props;
+    console.log(list)
     return (
       <div className="article-list">
-        { list.map((article, index) => 
+        { list.map((article, index) =>
           <ArticleCell 
             key={index}
             id={article.id}
-            title={article.title} 
-            content={article.content}
+            title={article.title}
+            title_en={article.title_en}
             view={article.view} 
-            time={article.time} 
-            tagID={article.tag_id}
-            tagTitle={article.tag_title}
-        />) }
+            time={article.time}
+          />
+          )
+        }
       </div>
       )
   }

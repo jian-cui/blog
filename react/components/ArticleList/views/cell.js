@@ -30,17 +30,19 @@ class ArticleCell extends React.Component {
   innerHTML(content) {
     return { __html: content }
   }
-  getBlogURL(id) {
+  getBlogURL(name) {
     // 根据id返回文章链接
-    return '/post/' + id;
+    return '/post/' + name;
   }
   render() {
+    let {title_en} = this.props;
     return (
       <div className="region">
         <div className="region-nodes">
           <div className="node node-shadow">
             <h1>
-              <a href={'/post/' + this.props.title_en } >{this.props.title}</a>
+              {/* <a href={'/post/' + this.props.title_en } >{this.props.title}</a> */}
+              <Link to={this.getBlogURL(title_en)}>{this.props.title}</Link>
             </h1>
             <div className="node-header">
               {/* <div className="tags">

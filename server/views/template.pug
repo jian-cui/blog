@@ -10,6 +10,10 @@ html
   body
     #app !{html}
     script.
-      var DEHYDRATED_STATE = !{preloadedState}                             
-    script(src=PUBLIC_URL + assetManifest['common'][0])
-    script(src=PUBLIC_URL + assetManifest['main'][0])
+      var DEHYDRATED_STATE = !{preloadedState}
+    if env=='production'                 
+      script(src=assetManifest['common.js'])
+      script(src=assetManifest['main.js'])
+    else
+      script(src=PUBLIC_URL + assetManifest['common'][0])
+      script(src=PUBLIC_URL + assetManifest['main'][0])

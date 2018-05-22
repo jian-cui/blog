@@ -24,9 +24,9 @@ class App extends React.Component {
   // }
   render() {
     return (
-      <div className="content-container">
-          {this.props.children}
-      </div>
+      <Layout className="content-container">
+        {this.props.children}
+      </Layout>
     )
   }
 }

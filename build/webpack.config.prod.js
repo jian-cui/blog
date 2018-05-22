@@ -73,9 +73,9 @@ let webpackConfig = {
     /** HMR设置 begin */
     // OccurenceOrderPlugin is needed for webpack 1.x only
     // new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.HotModuleReplacementPlugin(),
     // Use NoErrorsPlugin for webpack 1.x
-    new webpack.NoEmitOnErrorsPlugin(),
+    // new webpack.NoEmitOnErrorsPlugin(),
     /** HMR设置 end */
 
     new ManifestPlugin({

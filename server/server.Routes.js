@@ -105,8 +105,10 @@ async function handleRender(req, res, assetManifest, match, index) {
     PUBLIC_URL: '/',
     html: html,
     preloadedState: safeJSONstringify(preloadedState),
-    assetManifest: assetManifest
+    assetManifest: assetManifest,
+    env: process.env.NODE_ENV
   }, function(err, html) {
+    if (err) console.log(err);
     res.send(html);
   })
 }

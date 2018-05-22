@@ -55,35 +55,50 @@ router.post('/articleList', function (req, res, next) {
 router.post('/articleContent', function (req, res) {
   const name = req.body.id;
 
-  connection.query(`
-    update article set view=view+1 
-      where title_en='${name}'
-  `, function (err, results) {
+  let path = `html/${name}.html`;
+  fs.readFile(path, {
+    encoding: 'UTF-8'
+  }, (err, data) => {
     if (err) {
       res.send({
-        html: '<h1>更新数据库时发生错误</h1>'
+        state: 404,
+        html: '<h1>页面未找到</h1>'
       })
     } else {
-      let path = `html/${name}.html`;
-      fs.readFile(path, {
-        encoding: 'UTF-8'
-      }, (err, data) => {
-        if (err) {
-          res.send({
-            state: 404,
-            html: '<h1>页面未找到</h1>'
-          })
-        } else {
-    
-            res.send({
-              status: 200,
-              html: data
-            });
-    
-        }
-      })
+        res.send({
+          status: 200,
+          html: data
+        });
     }
   })
+
+  // connection.query(`
+  //   update article set view=view+1 
+  //     where title_en='${name}'
+  // `, function (err, results) {
+  //   if (err) {
+  //     res.send({
+  //       html: '<h1>更新数据库时发生错误</h1>'
+  //     })
+  //   } else {
+  //     let path = `html/${name}.html`;
+  //     fs.readFile(path, {
+  //       encoding: 'UTF-8'
+  //     }, (err, data) => {
+  //       if (err) {
+  //         res.send({
+  //           state: 404,
+  //           html: '<h1>页面未找到</h1>'
+  //         })
+  //       } else {
+  //           res.send({
+  //             status: 200,
+  //             html: data
+  //           });
+  //       }
+  //     })
+  //   }
+  // })
 })
 
 module.exports = router;

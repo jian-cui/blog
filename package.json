@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node run md && npm run build && npm run forever",
     "prod": "NODE_ENV=production node server/app.prod.js",
     "build": "NODE_ENV=production webpack --config build/webpack.config.prod.js",
     "forever": "NODE_ENV=production forever start server/app.prod.js",

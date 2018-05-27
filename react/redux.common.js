@@ -18,7 +18,8 @@ const actions = {
 
 // 判断是否服务器渲染
 const __SERVER__ = typeof window == 'object' ? false : true;
-const SERVER = __SERVER__ ? 'http://www.jiancui.net' : '';
+const SERVER = __SERVER__ ? 'http://localhost:3000' : '';
+
 const state = {
   api: {
     list: `${SERVER}/api/articleList`,

@@ -56,7 +56,6 @@ class ArticleList extends React.Component {
   }
   render () {
     const {list} = this.props;
-    console.log(list)
     return (
       <div className="article-list">
         { list.map((article, index) =>

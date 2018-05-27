@@ -24,6 +24,7 @@ function safeJSONstringify(obj) {
 //   component: articleContent.view
 // }]
 
+// 路由初始数据
 const pathInitData = {
   '/': {
     stateKey: articleList.stateKey,

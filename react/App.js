@@ -15,18 +15,25 @@ class App extends React.Component {
   //         <Content>
   //           { this.props.children }
   //         </Content>
-  //         <Sider collapsible={false}>
+  //         {/* <Sider collapsible={false}>
   //           This is a Sider
-  //         </Sider>
+  //         </Sider> */}
   //       </Layout>
   //     </Layout>
   //   )
   // }
   render() {
     return (
-      <Layout className="content-container">
-        {this.props.children}
-      </Layout>
+      <Layout>
+        {/* <Header>
+          <TopMenu />
+        </Header> */}
+        <Layout className="content-container">
+          <Content>
+            { this.props.children }
+          </Content>
+        </Layout>
+    </Layout>
     )
   }
 }

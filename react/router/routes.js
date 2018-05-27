@@ -80,6 +80,7 @@ function asyncComponentHOC(importComponent) {
             ...store.getState(),
             ...dehydratedState
           })
+
           this.setState({
             component: component
           })

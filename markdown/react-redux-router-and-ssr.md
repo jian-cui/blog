@@ -351,7 +351,7 @@ const AsyncArticleList = asyncComponentHOC(() => import(/* webpackChunkName: "ho
 
 
 
-__注意__：写的有点仓促，所以很多细节没有详细描述，可以对应我的[代码](https://github.com/jian-cui/blog/tree/ssr)来看，有没明白的可以发[邮件](jiancui1990@163.com)问我。
+__注意__：写的有点仓促，所以很多细节没有详细描述，可以对应我的[代码](https://github.com/jian-cui/blog/tree/ssr)来看，有没明白的可以发[邮件](mailto:jiancui1990@163.com)问我。
 
 
 在实现过程中参考学了很多网络及书上的资料，参考见下:

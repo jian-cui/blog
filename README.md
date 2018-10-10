@@ -1,8 +1,11 @@
 # 博客
 
-测试：`npm run dev`
+## 测试：
 
-生产环境： 
+`npm run dev`
+
+## 生产环境： 
+
   `npm run md` 转换markdown文件
 
   `npm run build` 生成react文件

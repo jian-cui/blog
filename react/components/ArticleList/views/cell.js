@@ -18,6 +18,7 @@ class ArticleCell extends React.Component {
   constructor (props, context) {
     super(props, context);
     this.formTagData = this.formTagData.bind(this);
+    this.formatTime = this.formatTime.bind(this);
   }
 
   formTagData(id, title) {
@@ -34,8 +35,17 @@ class ArticleCell extends React.Component {
     // 根据id返回文章链接
     return '/post/' + name;
   }
+  formatTime(time) {
+    let [date] = time.split(' ');
+    // let date = new Date(time)
+    let [year, month, day] = date.split('-');
+    let dt = new Date(parseInt(year), parseInt(month), parseInt(day));
+    console.log(dt)
+    return date;
+  }
   render() {
     let {title_en} = this.props;
+    let formatTime = this.formatTime;
     return (
       <div className="region">
         <div className="region-nodes">
@@ -49,7 +59,7 @@ class ArticleCell extends React.Component {
                 {this.formTagData(this.props.tagID, this.props.tagTitle)}
               </div> */}
               <div className="info">
-                <time>{this.props.time}</time>
+                <time>{formatTime(this.props.time)}</time>
                 <span>views: { this.props.view }</span>
               </div>
             </div>

@@ -2,8 +2,5 @@ node_modules/
 client/
 react-ui/
 npm-debug.log
-public/html/
-public/script/
-public/style/
-html/*.html
-public/images/*
+html/
+public/

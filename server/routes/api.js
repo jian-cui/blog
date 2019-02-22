@@ -38,7 +38,6 @@ router.post('/articleList', function (req, res, next) {
   //     if (err) next(err);
   //     res.send(results);
   //   })
-  console.log('getting article list')
   connection.query(`
     SELECT id, title, title_en, view, date_format(time, '%Y-%m-%d %H:%i') as time
     FROM

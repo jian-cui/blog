@@ -3,30 +3,18 @@ import { hot } from 'react-hot-loader';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import App from '../App.js';
 import routes from './routes.js';
-import omit from 'omit.js';
+// import omit from 'omit.js';
 
 class Routes extends React.Component {
   render() {
     return (
       <Router>
-        <App>
-          <Switch>
-            {
-              routes.map(route => {
-                return <Route {...route} key={route.path} />
-              })
-            }
-          </Switch>
-        </App>
+        <App />
       </Router>
     );
   }
 }
 
-let comp = Routes;
-if (process.env.HOT === true) {
-  comp = hot(module)(Routes);
-}
+let comp = (process.env.HOT === true) ? hot(module)(Routes) : Routes;
 
 export default comp;
-// export default hot(module)(Routes);

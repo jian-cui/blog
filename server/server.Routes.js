@@ -3,10 +3,10 @@ import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import store from '../react/Store.js';
 import App from '../react/App.js';
-import { actions as commonActions } from '../react/redux.common.js'
+// import { actions as commonActions } from '../react/redux.common.js'
 import * as articleList from '../react/components/ArticleList/';
-import * as articleContent from '../react/components/ArticleContent/';
-import { StaticRouter as Router, Route, Switch, matchPath } from "react-router-dom";
+// import * as articleContent from '../react/components/ArticleContent/';
+import { StaticRouter, Route, Switch, matchPath } from "react-router-dom";
 import {combineReducers} from 'redux';
 import routes from '../react/router/routes.js';
 import '../react/less/common.less';
@@ -27,60 +27,67 @@ function safeJSONstringify(obj) {
 // 路由初始数据
 const pathInitData = {
   '/': {
-    stateKey: articleList.stateKey,
+    key: articleList.key,
     reducer: articleList.reducer,
     state: articleList.state,
     component: articleList.view
   },
-  '/post/:id': {
-    stateKey: articleContent.stateKey,
-    reducer: articleContent.reducer,
-    state: articleContent.state,
-    component: articleContent.view
-  }
+  // '/post/:id': {
+  //   key: articleContent.key,
+  //   reducer: articleContent.reducer,
+  //   state: articleContent.state,
+  //   component: articleContent.view
+  // }
 }
 
-class Routes extends React.Component {
-  render() {
-    const {url, context} = this.props;
-    return (
-      <Router location={url} context={context}>
-        <App>
-          <Switch>
-            {
-              routes.map(route => {
-                <Route {...route} key={route.path} />
-              })
-            }
-          </Switch>
-        </App>
-      </Router>
-    );
-  }
+/**
+ * 路由
+ * 
+ * @param {any} props 
+ * @returns 
+ */
+function Routes(props) {
+  const {url, context} = props;
+  return (
+    <StaticRouter location={url} context={context}>
+      <App />
+    </StaticRouter>
+  );
 }
 
+/**
+ * 申请页面时，在服务器上直出初始页面
+ * 
+ * @param {any} req 
+ * @param {any} res 
+ * @param {any} assetManifest 
+ * @param {any} match 
+ * @param {any} index 
+ */
 async function handleRender(req, res, assetManifest, match, index) {
   const pathData = pathInitData[match.path];
   const component = pathData.component;
 
-  store.dispatch(commonActions.setId(match.params.id ? match.params.id : -1));
+  // store.dispatch(commonActions.setId(match.params.id ? match.params.id : -1));
 
   store._reducers = {
     ...store._reducers,
-    [pathData.stateKey]: pathData.reducer
+    [pathData.key]: pathData.reducer
   }
   store.reset(combineReducers({
     ...store._reducers
   }), {
     ...store.getState(),
-    [pathData.stateKey]: pathData.state
+    [pathData.key]: pathData.state
   })
 
   // 服务器端获取数据
   let prefetchTasks = [];
   let _tasks;
   if (component && component.fetch) {
+
     _tasks = component.fetch(store.getState(), store.dispatch)
+
     if (Array.isArray(_tasks)) {
       prefetchTasks = prefetchTasks.concat(_tasks);
     } else if (_task.then) {
@@ -88,9 +95,10 @@ async function handleRender(req, res, assetManifest, match, index) {
     }
   }
 
-  await Promise.all(prefetchTasks)
+  await Promise.all(prefetchTasks);
 
   const context = {}
+
   // Render the component to a string
   const html = ReactDOMServer.renderToString(
     <Provider store={store}>
@@ -98,9 +106,9 @@ async function handleRender(req, res, assetManifest, match, index) {
     </Provider>
   )
 
+  console.log('rendered html: ', html);
   // Grab the initial state from our Redux store
   const preloadedState = store.getState()
-  // console.log(preloadedState);
   // Send the rendered page back to the client
   res.render('template', {
     PUBLIC_URL: '/',
@@ -114,19 +122,20 @@ async function handleRender(req, res, assetManifest, match, index) {
   })
 }
 
-const getMatch=(routesArray, url)=>{
-  return routesArray.some(router=>matchPath(url,{
-    path: router.path,
-    exact: router.exact,
-  }))
-}
-
+/**
+ * 渲染页面
+ * 
+ * @param {any} req 请求
+ * @param {any} res 返回数据
+ * @param {any} assetManifest 静态文件信息
+ * @param {any} next 
+ */
 function renderPage(req, res, assetManifest, next) {
-  function isMatch(routerProp) {
-    const match = matchPath(req.url, routerProp);
-    if (match) return true;
-    return false;
-  }
+  // function isMatch(routerProp) {
+  //   const match = matchPath(req.url, routerProp);
+  //   if (match) return true;
+  //   return false;
+  // }
   let match, index;
   for (let i=0;i<routes.length;i++) {
     match = matchPath(req.url, routes[i]);

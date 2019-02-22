@@ -1,41 +1,30 @@
 import React from 'react';
 import { view as TopMenu } from './components/TopMenu/';
 import { Layout } from '../react-ui/components/';
+import { Route, Switch } from "react-router-dom";
+import routes from './router/routes.js';
+import { hot } from 'react-hot-loader';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-class App extends React.Component {
-  // render() {
-  //   return (
-  //     <Layout>
-  //       <Header>
-  //         <TopMenu />
-  //       </Header>
-  //       <Layout className="content-container">
-  //         <Content>
-  //           { this.props.children }
-  //         </Content>
-  //         {/* <Sider collapsible={false}>
-  //           This is a Sider
-  //         </Sider> */}
-  //       </Layout>
-  //     </Layout>
-  //   )
-  // }
-  render() {
-    return (
-      <Layout>
-        {/* <Header>
-          <TopMenu />
-        </Header> */}
-        <Layout className="content-container">
-          <Content>
-            { this.props.children }
-          </Content>
-        </Layout>
+function App() {
+  return (
+    <Layout>
+      <Layout className="content-container">
+        <Content>
+          <Switch>
+            {
+              routes.map(route => {
+                return <Route {...route} key={route.path} />
+              })
+            }
+          </Switch>
+        </Content>
+      </Layout>
     </Layout>
-    )
-  }
+  )
 }
 
-export default App;
+let comp = (process.env.HOT === true) ? hot(module)(App) : App;
+
+export default comp;

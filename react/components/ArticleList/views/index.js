@@ -31,12 +31,25 @@ class ArticleList extends React.Component {
     super(props, context);
   
     this.scrollPrevDist = 30; // 滚动加载数据的预设距离
-    this.pullArticles = this.pullArticles.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
+    // this.pullArticles = this.pullArticles.bind(this);
+    // this.handleScroll = this.handleScroll.bind(this);
   }
+  /**
+   * 拉取数据交给上层的高阶组件来做
+   * 
+   * 
+   * @memberOf ArticleList
+   */
   pullArticles () {
-    this.constructor.fetch(this.props.state, this.props.dispatch);
+    this.constructor.fetch(this.props.getState(), this.props.dispatch);
   }
+  /**
+   * 绑定滚动事件
+   * 
+   * @param {any} e 
+   * 
+   * @memberOf ArticleList
+   */
   handleScroll(e) {
     let scrollY = document.documentElement.scrollTop;
     let windowHeight = document.documentElement.clientHeight;
@@ -44,6 +57,10 @@ class ArticleList extends React.Component {
     if (scrollY + this.scrollPrevDist + windowHeight >= docHeight) {
       this.pullArticles();
     }
+  }
+  componentWillMount() {
+    // this.pullArticles = this.pullArticles.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
   componentDidMount() {
     // 获取数据
@@ -56,6 +73,7 @@ class ArticleList extends React.Component {
   }
   render () {
     const {list} = this.props;
+
     return (
       <div className="article-list">
         { list.map((article, index) =>
@@ -74,15 +92,9 @@ class ArticleList extends React.Component {
   }
 }
 
-export const stateKey = 'articleList';
-
 const mapStateToProps = (state, ownProps) => {
   return {
-    list: state[stateKey].list,
-    lock: state[stateKey].lock,
-    status: state[stateKey].status,
-    page: state[stateKey].page,
-    state: state
+    list: state.articleList.list
   }
 }
 

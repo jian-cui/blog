@@ -40,11 +40,10 @@ class ArticleCell extends React.Component {
     // let date = new Date(time)
     let [year, month, day] = date.split('-');
     let dt = new Date(parseInt(year), parseInt(month), parseInt(day));
-    console.log(dt)
     return date;
   }
   render() {
-    let {title_en} = this.props;
+    let { title_en } = this.props;
     let formatTime = this.formatTime;
     return (
       <div className="region">
@@ -60,7 +59,7 @@ class ArticleCell extends React.Component {
               </div> */}
               <div className="info">
                 <time>{formatTime(this.props.time)}</time>
-                <span>views: { this.props.view }</span>
+                {/* <span>views: { this.props.view }</span> */}
               </div>
             </div>
             {/* <div className="node-body" dangerouslySetInnerHTML={ this.innerHTML(this.props.content) }>

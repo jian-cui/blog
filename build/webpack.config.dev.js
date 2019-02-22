@@ -15,7 +15,7 @@ let webpackConfig = {
     // filename: 'script/bundle.js',
     filename: 'script/[name].js',
     chunkFilename: 'script/[name].[chunkhash].js',
-    path: path.resolve(__dirname, '../public'),
+    path: path.resolve(__dirname, '../dist'),
     publicPath: "/"      // html中script标签的路径头
   },
   module: {

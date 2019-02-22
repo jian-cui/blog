@@ -3,7 +3,7 @@ import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
 import reducer, { originalReducer } from './Reducer.js';
 import reduxImmutableState from 'redux-immutable-state-invariant';
 import resetEnhancer from './enhancers/reset.js';
-import { state as commonState, stateKey as commonStateKey } from './redux.common.js';
+// import { state as commonState } from './redux.common.js';
 import { state as topMenuState } from './components/TopMenu';
 
 const middlewares = [thunkMiddleware];
@@ -18,12 +18,13 @@ const storeEnhancers = compose(
   (win && win.devToolsExtension) ? win.devToolsExtension() : (f) => f,
 );
 
+// 判断是否服务器渲染
+const __SERVER__ = typeof window == 'object' ? false : true;
+const SERVER = __SERVER__ ? 'http://www.jiancui.net' : '';
+
 // 初始State
 const initialState = {
-  [commonStateKey]: commonState,
   topMenu: topMenuState
-  // [articleListKey]: articleListState,
-  // [articleContentKey]: articleContentState
 };
 // export default createStore(reducer, initialState, storeEnhancers);
 

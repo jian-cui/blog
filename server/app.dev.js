@@ -9,7 +9,7 @@ require('babel-register')({
 require("babel-polyfill");
 
 // require('isomorphic-fetch');
-var fs = require('fs'); 
+// var fs = require('fs'); 
 // var babelConfig = JSON.parse(fs.readFileSync('./.babelrc'));  
 // require('babel-register')(babelConfig);
 

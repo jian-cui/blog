@@ -1,6 +1,6 @@
 import thunkMiddleware from 'redux-thunk'
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
-import reducer, { originalReducer } from './Reducer.js';
+import reducer, { initReducer } from './Reducer.js';
 import reduxImmutableState from 'redux-immutable-state-invariant';
 import resetEnhancer from './enhancers/reset.js';
 // import { state as commonState } from './redux.common.js';
@@ -53,5 +53,5 @@ if (module.hot) {
   });
 }
 
-store._reducers = originalReducer;
+store._reducers = initReducer;
 export default store;

@@ -46,6 +46,7 @@ router.post('/articleList', function (req, res, next) {
       visible=1
     order by time DESC`, function (err, results) {
       if (err) next(err);
+      results = JSON.parse(JSON.stringify(results));
       res.send(results);
     })
 })

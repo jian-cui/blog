@@ -11,8 +11,8 @@ html
     script.
       var DEHYDRATED_STATE = !{preloadedState}
     if env=='production'                 
-      script(src=assetManifest['common.js'])
+      script(src=assetManifest['vendors~main.js'])
       script(src=assetManifest['main.js'])
     else
-      script(src=PUBLIC_URL + assetManifest['common'][0])
+      script(src=PUBLIC_URL + assetManifest['vendors~main'][0])
       script(src=PUBLIC_URL + assetManifest['main'][0])

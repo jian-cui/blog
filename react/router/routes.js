@@ -59,7 +59,7 @@ function asyncComponentHOC(importComponent) {
     constructor(props, context) {
       super(props, context);
       this.state = {
-        component: null
+        component: importComponent.view
       }
       // 设置公用redux
       // store.dispatch(commonActions.setId(props.match.params.id ? props.match.params.id : -1));
@@ -68,8 +68,8 @@ function asyncComponentHOC(importComponent) {
      * 是否拆分为constructor和componentDidMount两部分？
      * 
      */
-    async componentWillMount() {
-      const { view: component, key: key, reducer, state } = await importComponent();
+    async componentDidMount() {
+      const { view: component, key: key, reducer, state } = importComponent;
       let dehydratedState = (win && win.DEHYDRATED_STATE);
       dehydratedState = dehydratedState ? dehydratedState : {};
       // const oldState = store.getState();
@@ -89,13 +89,13 @@ function asyncComponentHOC(importComponent) {
           store.reset(combineReducers({
             ...store._reducers
           }), {
-            ...store.getState(),
+            // ...store.getState(),
             ...dehydratedState
           })
 
-          this.setState({
-            component: component
-          })
+          // this.setState({
+          //   component: component
+          // })
           // 清空预置内容
           win.DEHYDRATED_STATE = {};
         })
@@ -113,22 +113,21 @@ function asyncComponentHOC(importComponent) {
         })
         statePromise = component.fetch(store.getState(), store.dispatch);
         Promise.all(statePromise).then(result => {
-          this.setState({
-            component: component
-          })
+          // this.setState({
+          //   component: component
+          // })
         })
       }
     }
     render() {
       const Comp = this.state.component;
-      console.log('routes component: ', Comp)
       return Comp ? <Comp {...this.props} /> : null;
     }
   }
 }
 
-const AsyncArticleList = asyncComponentHOC(() => import(/* webpackChunkName: "home" */ '../components/ArticleList/'));
-// const AsyncArticleList = asyncComponentHOC(ArticleList);
+// const AsyncArticleList = asyncComponentHOC(() => import(/* webpackChunkName: "home" */ '../components/ArticleList/'));
+const AsyncArticleList = asyncComponentHOC(require('../components/ArticleList/'));
 // const AsyncArticleContent = asyncComponentHOC(() => import(/* webpackChunkName: "content" */ '../components/ArticleContent/'));
 AsyncArticleList.displayName = 'Async(Home)';
 // AsyncArticleContent.displayName = 'Async(Content)';

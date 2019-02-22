@@ -5,8 +5,8 @@ import {reducer as topMenuReducer} from './components/TopMenu';
 // import {reducer as articleContentReducer} from './components/ArticleContent';
 
 
-export const originalReducer = {
+export const initReducer = {
   topMenu: topMenuReducer,
 }
 
-export default combineReducers(originalReducer);
+export default combineReducers(initReducer);

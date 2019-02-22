@@ -3,7 +3,7 @@ import { view as TopMenu } from './components/TopMenu/';
 import { Layout } from '../react-ui/components/';
 import { Route, Switch } from "react-router-dom";
 import routes from './router/routes.js';
-import { hot } from 'react-hot-loader';
+import { hot } from 'react-hot-loader/root';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -25,6 +25,6 @@ function App() {
   )
 }
 
-let comp = (process.env.HOT === true) ? hot(module)(App) : App;
+// let comp = (process.env.HOT === true) ? hot(App) : App;
 
-export default comp;
+export default hot(App);

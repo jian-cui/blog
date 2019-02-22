@@ -30,11 +30,12 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 
 const app = express();
-const config = require('../build/webpack.config.dev.js');
-const compiler = webpack(config);
+
+const webpackConfig = require('../build/webpack.config.dev.js');
+const compiler = webpack(webpackConfig);
 const routerApi = require('./routes/api');
 const webpackDevMiddleware = require('webpack-dev-middleware')(compiler, {
-  publicPath: config.output.publicPath,
+  publicPath: webpackConfig.output.publicPath,
   serverSideRender: true,
   stats: {
     colors: true,
@@ -43,30 +44,21 @@ const webpackDevMiddleware = require('webpack-dev-middleware')(compiler, {
   }
 });
 
-const renderPage = require('./server.Routes.js').default;
-
-/**
- * 获取内存中的asset-manifest.json
- */
-function getAssetManifest() {
-  // console.log(path.resolve(__dirname, '../public/asset-manifest.json'))
-  const content = webpackDevMiddleware.fileSystem.readFileSync('/public/asset-manifest.json');
-  return JSON.parse(content);
-}
-
-// Tell express to use the webpack-dev-middleware and use the webpack.config.js
-// configuration file as a base.
-// app.use(webpackDevMiddleware(compiler, {
-//   publicPath: config.output.publicPath,
-//   stats: {
-//     colors: true,
-//     chunks: false,
-//     children: false
-//   }
-// }));
-
 app.use(webpackDevMiddleware);
 app.use(require("webpack-hot-middleware")(compiler));
+
+const renderPage = require('./server.Routes.js').default;
+
+// /**
+//  * 获取内存中的asset-manifest.json
+//  */
+// function getAssetManifest() {
+//   // console.log(path.resolve(__dirname, '../public/asset-manifest.json'))
+//   const content = webpackDevMiddleware.fileSystem.readFileSync('/public/asset-manifest.json');
+//   return JSON.parse(content);
+// }
+
+
 
 // 静态资源
 app.use(express.static(path.join(__dirname, '../public')));
@@ -78,7 +70,6 @@ app.set('views', path.resolve(__dirname, 'views'));
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
-// app.use(multer());
 
 app.use('/api', routerApi);
 

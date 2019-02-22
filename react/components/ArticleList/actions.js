@@ -6,9 +6,9 @@ export const fetchArticlesStarted = () => ({
   type: FETCH_STARTED
 })
 
-export const fetchArticlesSuccess = (result) => ({
+export const fetchArticlesSuccess = (data) => ({
   type: FETCH_SUCCESS,
-  result
+  data
 })
 
 export const fetchArticlesFail = (error) => ({
@@ -39,13 +39,11 @@ export const fetchArticles = () => {
         throw new Error('Fail to get response width status ' + res.status);
       }
       // 此处要将Promise返回
-      return res.json().then(data => {
-        dispatch(fetchArticlesSuccess(data));
-      }).catch(err => {
-        throw new Error('JSON转换不对');
-      })
-    }).catch(error => {
-      dispatch(fetchArticlesFail(error));
+      return res.json()
+    }).then(data => {
+      dispatch(fetchArticlesSuccess(data));
+    }).catch(err => {
+      dispatch(fetchArticlesFail('数据出错'))
     })
   }
 }

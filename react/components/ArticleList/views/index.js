@@ -73,7 +73,6 @@ class ArticleList extends React.Component {
   }
   render () {
     const {list} = this.props;
-
     return (
       <div className="article-list">
         { list.map((article, index) =>
@@ -93,6 +92,7 @@ class ArticleList extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log('article list mapState: ', state)
   return {
     list: state.articleList.list
   }

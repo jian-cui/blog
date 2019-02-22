@@ -7,7 +7,8 @@ import App from '../react/App.js';
 import * as articleList from '../react/components/ArticleList/';
 // import * as articleContent from '../react/components/ArticleContent/';
 import { StaticRouter, Route, Switch, matchPath } from "react-router-dom";
-import {combineReducers} from 'redux';
+import reducer, { initReducer } from '../react/Reducer.js';
+import { combineReducers, createStore } from 'redux';
 import routes from '../react/router/routes.js';
 import '../react/less/common.less';
 
@@ -29,7 +30,7 @@ const pathInitData = {
   '/': {
     key: articleList.key,
     reducer: articleList.reducer,
-    state: articleList.state,
+    // state: articleList.state,
     component: articleList.view
   },
   // '/post/:id': {
@@ -44,7 +45,7 @@ const pathInitData = {
  * 路由
  * 
  * @param {any} props 
- * @returns 
+ * @returns React Component
  */
 function Routes(props) {
   const {url, context} = props;
@@ -68,17 +69,20 @@ async function handleRender(req, res, assetManifest, match, index) {
   const pathData = pathInitData[match.path];
   const component = pathData.component;
 
-  // store.dispatch(commonActions.setId(match.params.id ? match.params.id : -1));
+  // const store = createStore(reducer);
 
+  // store.dispatch(commonActions.setId(match.params.id ? match.params.id : -1));
+  
   store._reducers = {
-    ...store._reducers,
+    ...initReducer,
     [pathData.key]: pathData.reducer
   }
   store.reset(combineReducers({
+    // ...initReducer
     ...store._reducers
   }), {
     ...store.getState(),
-    [pathData.key]: pathData.state
+    [pathData.key]: {}
   })
 
   // 服务器端获取数据
@@ -97,8 +101,9 @@ async function handleRender(req, res, assetManifest, match, index) {
 
   await Promise.all(prefetchTasks);
 
+  console.log(222, store.getState())
   const context = {}
-
+  console.log(store);
   // Render the component to a string
   const html = ReactDOMServer.renderToString(
     <Provider store={store}>
@@ -106,7 +111,7 @@ async function handleRender(req, res, assetManifest, match, index) {
     </Provider>
   )
 
-  console.log('rendered html: ', html);
+  console.log('server rendered html: ', html);
   // Grab the initial state from our Redux store
   const preloadedState = store.getState()
   // Send the rendered page back to the client

@@ -1,14 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
+// const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const glob = require('glob');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const ExtractTextPlugin = require("extract-text-webpack-plugin");
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ManifestPlugin = require('webpack-manifest-plugin');
 
 let webpackConfig = {
+  mode: 'development',
   entry: ['webpack-hot-middleware/client', 'react-hot-loader/patch', path.resolve(__dirname, '../react/index.js')],
   // entry: ['webpack-hot-middleware/client', path.resolve(__dirname, '../react/index.js')],
   output: {
@@ -19,7 +21,7 @@ let webpackConfig = {
     publicPath: "/"      // html中script标签的路径头
   },
   module: {
-    loaders: [{
+    rules: [{
       test: /\.jsx$|\.js$/,
       exclude: /node_modules/,
       loader: 'babel-loader',
@@ -53,11 +55,19 @@ let webpackConfig = {
     }]
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    },
   },
   devtool: "source-map",
   // watch: true,
   // externals: ["./node_modules"],
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
   plugins: [
     // 清理特定目录
     // new CleanWebpackPlugin(['client']),
@@ -77,19 +87,16 @@ let webpackConfig = {
     new ManifestPlugin({
       fileName: 'asset-manifest.json'
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      // names: ['vendor', 'manifest'],
-      name: "common",
-      // filename: 'script/common.js'
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   // names: ['vendor', 'manifest'],
+    //   name: "common",
+    //   // filename: 'script/common.js'
+    // }),
     // new HtmlWebpackPlugin({
     //   filename: 'index.html',
     //   template: './react/template.html',
     //   inject: true,
     // }),
-    // new ExtractTextPlugin({
-    //   filename: 'style/style.css'
-    // })
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': "'development'",

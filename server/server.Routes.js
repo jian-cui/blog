@@ -101,9 +101,7 @@ async function handleRender(req, res, assetManifest, match, index) {
 
   await Promise.all(prefetchTasks);
 
-  console.log(222, store.getState())
   const context = {}
-  console.log(store);
   // Render the component to a string
   const html = ReactDOMServer.renderToString(
     <Provider store={store}>
